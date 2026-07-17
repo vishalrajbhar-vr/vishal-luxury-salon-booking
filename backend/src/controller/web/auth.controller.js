@@ -1,10 +1,10 @@
 import userModel from "../../models/user.model.js"
 import bcrypt from 'bcrypt'
 import generateToken from "../../utils/generateToken.js"
-import generateOtp from "../../utils/generateOtp.js"
 import sendEmail from "../../utils/sendemail.js"
 import { use } from "react"
 import { callbackPromise } from "nodemailer/lib/shared/index.js"
+import generateOtp from "../../utils/generateotp.js"
 
 
 //--------------------------------------signUp----------------------------------------
