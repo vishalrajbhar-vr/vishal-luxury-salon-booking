@@ -1,0 +1,8 @@
+import express from 'express'
+import { adminlogin, adminregister } from "../../controller/admin/adminAuth.controller.js";
+
+const adminAuthModelRouter = express.Router();
+adminAuthModelRouter.post("/add/Admin/register", adminregister)
+adminAuthModelRouter.post("/add/Admin/login", adminlogin)
+
+export default adminAuthModelRouter;

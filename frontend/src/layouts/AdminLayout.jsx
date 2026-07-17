@@ -1,0 +1,249 @@
+import { useState } from "react";
+import Dashboard from "../admin/pages/Dashboard";
+import Appointments from "../admin/pages/Appointments";
+import AddGallery from "../admin/pages/gallery/AddGallery";
+import AllGallery from "../admin/pages/gallery/AllGallery";
+import AdminNavbar from "../admin/components/AdminNavbar";
+import AdminSidebar from "../admin/components/AdminSidebar";
+import AllContact from "../admin/pages/Allcontact";
+import EditService from "../admin/pages/service/EditService";
+import AddService from "../admin/pages/service/AddService";
+import AllService from "../admin/pages/service/AllService";
+import ViewService from "../admin/pages/service/ViewService";
+import EditGallery from "../admin/pages/gallery/EditGallery";
+import ViewGallery from "../admin/pages/gallery/ViewGallery";
+import AddPremumGallery from "../admin/pages/premumGallery/AddPremumGallery";
+import AllPremumGallery from "../admin/pages/premumGallery/AllPremumGallery";
+import EditpremumGallery from "../admin/pages/premumGallery/EditpremumGallery";
+import ViewpremumGallery from "../admin/pages/premumGallery/ViewpremumGallery";
+import AddTestemonial from "../admin/pages/testemonial/AddTestemonial";
+import AllTestemonial from "../admin/pages/testemonial/AllTestemonial";
+import EditTestimonial from "../admin/pages/testemonial/EditTestimonial";
+import ViewTestimonial from "../admin/pages/testemonial/ViewTestimonial";
+import SettingsModal from "../admin/components/SettingsModal";
+import Profile from "../admin/pages/setting/profile";
+import EditProfile from "../admin/pages/setting/EditProfile";
+import ChangePassword from "../admin/pages/setting/ChangePassword";
+import SettingCard from "../admin/pages/setting/SettingCard";
+
+function AdminLayout() {
+
+  const [refresh, setRefresh] = useState(false);
+  const [activePage, setActivePage] = useState("dashboard");
+
+  const [editservice, setServiceEdit] = useState(null);
+  const [viewservice, setServiceView] = useState(null);
+
+  const [editgallery, setgalleryEdit] = useState(null);
+  const [viewgallery, setgalleryView] = useState(null);
+
+  const [editpremumgallery, setpremumgalleryEdit] = useState(null);
+  const [viewpremumgallery, setpremumgalleryView] = useState(null);
+
+  const [edittestimonial, settestimonialEdit] = useState(null);
+  const [viewtestimonial, settestimonialView] = useState(null);
+
+  const [editProfile, setProfileEdit] = useState(null);
+  const [settingOption, setSettingOption] = useState("profile");
+
+  const renderPage = () => {
+    switch (activePage) {
+
+      case "dashboard":
+        return <Dashboard setActivePage={setActivePage} />;
+
+      case "addService":
+        return <AddService onSuccess={() => setActivePage("allService")} />;
+
+      case "allService":
+        return (
+          <AllService
+            onAddServiceClick={() => setActivePage("addService")}
+            setServiceEdit={setServiceEdit}
+            setServiceView={setServiceView}
+            refresh={refresh}
+          />
+        );
+
+      case "appointments":
+        return <Appointments />;
+
+      case "addGallery":
+        return <AddGallery onSuccess={() => setActivePage("allGallery")} />;
+
+      case "allGallery":
+        return (
+          <AllGallery
+            onAddGalleryClick={() => setActivePage("addGallery")}
+            setgalleryEdit={setgalleryEdit}
+            setgalleryView={setgalleryView}
+            refresh={refresh}
+          />
+        );
+
+      case "allcontact":
+        return <AllContact />;
+
+      case "addPremiumGallery":
+        return <AddPremumGallery onSuccess={() => setActivePage("allPremiumGallery")} />;
+
+      case "allPremiumGallery":
+        return (
+          <AllPremumGallery
+            onAddPremumGalleryClick={() => setActivePage("addPremiumGallery")}
+            setPremumgalleryEdit={setpremumgalleryEdit}
+            setPremumgalleryView={setpremumgalleryView}
+            refresh={refresh}
+          />
+        );
+
+      case "addTestimonial":
+        return <AddTestemonial onSuccess={() => setActivePage("allTestimonial")} />;
+
+      case "allTestimonial":
+        return (
+          <AllTestemonial
+            onAddTestemonialClick={() => setActivePage("addTestimonial")}
+            setTestimonialEdit={settestimonialEdit}
+            setTestimonialView={settestimonialView}
+            refresh={refresh}
+          />
+        );
+
+      case "settings":
+        return <SettingsModal onClose={() => setActivePage("dashboard")} />;
+
+      case "Setting":
+        return (
+          <div className="flex gap-6 items-start">
+            <div className="w-1/2">
+              <SettingCard
+                settingOption={settingOption}
+                setSettingOption={setSettingOption}
+              />
+            </div>
+            <div className="w-1/2">
+              {settingOption === "profile" && (
+                <Profile
+                  setProfileEdit={(profile) => {
+                    setProfileEdit(profile);
+                    setSettingOption("editProfile");
+                  }}
+                  refresh={refresh}
+                />
+              )}
+              {settingOption === "editProfile" && (
+                <EditProfile
+                  selectedProfile={editProfile}
+                  onClose={() => setSettingOption("profile")}
+                  onSuccess={() => {
+                    setRefresh((prev) => !prev);
+                    setSettingOption("profile");
+                  }}
+                />
+              )}
+              {settingOption === "changePassword" && (
+                <ChangePassword
+                  setActivePage={(page) => {
+                    if (page === "profile") setSettingOption("profile");
+                  }}
+                />
+              )}
+            </div>
+          </div>
+        );
+
+      default:
+        return <Dashboard />;
+    }
+  };
+
+  return (
+    <div className="bg-black text-white min-h-screen">
+
+      {/* Sidebar */}
+      <div className="fixed left-0 top-0 h-screen w-72 z-50 overflow-y-auto">
+        <AdminSidebar activePage={activePage} setActivePage={setActivePage} />
+      </div>
+
+      {/* Main Area */}
+      <div className="ml-72">
+
+        {/* Navbar */}
+        <div className="fixed top-0 left-72 right-0 z-40">
+          <AdminNavbar refresh={refresh} />
+        </div>
+
+        {/* Page Content */}
+        <main className="pt-24 p-6 min-h-screen">
+          {renderPage()}
+        </main>
+
+        {/* Service Modals */}
+        {editservice && (
+          <EditService
+            selectedService={editservice}
+            onClose={() => setServiceEdit(null)}
+            onSuccess={() => {
+              setRefresh((prev) => !prev);
+              setServiceEdit(null);
+            }}
+          />
+        )}
+        {viewservice && (
+          <ViewService service={viewservice} onClose={() => setServiceView(null)} />
+        )}
+
+        {/* Gallery Modals */}
+        {editgallery && (
+          <EditGallery
+            selectedGallery={editgallery}
+            onClose={() => setgalleryEdit(null)}
+            onSuccess={() => {
+              setRefresh((prev) => !prev);
+              setgalleryEdit(null);
+            }}
+          />
+        )}
+        {viewgallery && (
+          <ViewGallery gallery={viewgallery} onClose={() => setgalleryView(null)} />
+        )}
+
+        {/* Premium Gallery Modals */}
+        {editpremumgallery && (
+          <EditpremumGallery
+            selectedPremumGallery={editpremumgallery}
+            onClose={() => setpremumgalleryEdit(null)}
+            onSuccess={() => {
+              setRefresh((prev) => !prev);
+              setpremumgalleryEdit(null);
+            }}
+          />
+        )}
+        {viewpremumgallery && (
+          <ViewpremumGallery premumgallery={viewpremumgallery} onClose={() => setpremumgalleryView(null)} />
+        )}
+
+        {/* Testimonial Modals */}
+        {edittestimonial && (
+          <EditTestimonial
+            selectedTestimonial={edittestimonial}
+            onClose={() => settestimonialEdit(null)}
+            onSuccess={() => {
+              setRefresh((prev) => !prev);
+              settestimonialEdit(null);
+            }}
+          />
+        )}
+        {viewtestimonial && (
+          <ViewTestimonial testimonial={viewtestimonial} onClose={() => settestimonialView(null)} />
+        )}
+
+
+
+      </div>
+    </div>
+  );
+}
+
+export default AdminLayout;
