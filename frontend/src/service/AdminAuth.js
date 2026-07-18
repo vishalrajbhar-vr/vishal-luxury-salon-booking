@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const loginadminAuth = async (data) => {
-    const response = await axios.post("http://localhost:1000/admin/auth/api/add/Admin/login", data);
+    const response = await axios.post("https://vishal-luxury-salon-booking.onrender.com/admin/auth/api/add/Admin/login", data);
     return response;
 }
 
