@@ -6,6 +6,6 @@ const adminAuthModelRouter = express.Router();
 adminAuthModelRouter.post("/add/Admin/register", adminregister)
 adminAuthModelRouter.post("/add/Admin/login", adminlogin)
 adminAuthModelRouter.get("/find/Admin/data", getalladmindata)
-adminAuthModelRouter.post("/admin/change-password", adminAuth, changePassword);
+adminAuthModelRouter.post("/admin/change-password/:id", adminAuth, changePassword);
 
 export default adminAuthModelRouter;

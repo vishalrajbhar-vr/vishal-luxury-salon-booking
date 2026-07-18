@@ -8,6 +8,9 @@ const [showPassword, setShowPassword] = useState(false);
 const [showNewPassword, setShowNewPassword] = useState(false);
 const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+const admin = JSON.parse(localStorage.getItem("admin"));
+const adminId = admin?._id;
+
     const [formData, setFormData] = useState({
         password: "",
         newPassword: "",

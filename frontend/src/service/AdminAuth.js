@@ -5,11 +5,11 @@ export const loginadminAuth = async (data) => {
     return response;
 }
 
-export const changePassword = async (data) => {
+export const changePassword = async (id, data) => {
     const token = localStorage.getItem("adminToken");
 
     const response = await axios.post(
-        "https://vishal-luxury-salon-booking.onrender.com/admin/auth/api/admin/change-password",
+        `https://vishal-luxury-salon-booking.onrender.com/admin/auth/api/admin/change-password/${id}`,
         data,
         {
             headers: {
