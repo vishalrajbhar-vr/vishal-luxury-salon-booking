@@ -252,6 +252,7 @@ export const myAppointments = async (req, res) => {
     }
 };
 
+// ------------------------Google Login--------------------------
 export const googleCallback = (req, res) => {
     try {
 
