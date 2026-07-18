@@ -9,7 +9,7 @@ export const changePassword = async (data) => {
     const token = localStorage.getItem("adminToken");
 
     const response = await axios.post(
-        "https://vishal-luxury-salon-booking.onrender.com/admin/auth/api/admin/change-password",
+        "https://vishal-luxury-salon-booking.onrender.com/admin/auth/api/add/Admin/login",
         data,
         {
             headers: {
@@ -22,6 +22,6 @@ export const changePassword = async (data) => {
 };
 
 export const getAllData = async () => {
-    const response = await axios.get("https://vishal-luxury-salon-booking.onrender.com/admin/auth/api/find/Admin/data");
+    const response = await axios.get("https://vishal-luxury-salon-booking.onrender.com/admin/auth/api/add/Admin/login");
     return response;
 }
