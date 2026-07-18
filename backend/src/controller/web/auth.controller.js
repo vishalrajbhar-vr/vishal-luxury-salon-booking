@@ -263,14 +263,14 @@ export const googleCallback = (req, res) => {
         );
 
         res.redirect(
-            `http://localhost:5173/google-success?token=${token}&user=${userData}`
+            `https://vishal-luxury-salon-booking.netlify.app/google-success?token=${token}&user=${userData}`
         );
 
     } catch (error) {
         console.log(error);
 
         res.redirect(
-            "http://localhost:5173/login"
+            "https://vishal-luxury-salon-booking.netlify.app/login"
         );
     }
 };
