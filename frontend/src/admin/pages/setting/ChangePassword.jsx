@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { FaLock, FaKey, FaArrowLeft, FaEye,FaEyeSlash, } from "react-icons/fa";
+import { FaLock, FaKey, FaArrowLeft, FaEye, FaEyeSlash, } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { changePassword } from "../../../service/AdminAuth.js";
 
 function ChangePassword({ setActivePage }) {
-const [showPassword, setShowPassword] = useState(false);
-const [showNewPassword, setShowNewPassword] = useState(false);
-const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-const admin = JSON.parse(localStorage.getItem("admin"));
-const adminId = admin?._id;
+    const admin = JSON.parse(localStorage.getItem("admin"));
+    const adminId = admin?._id;
 
     const [formData, setFormData] = useState({
         password: "",
@@ -53,13 +53,14 @@ const adminId = admin?._id;
         setLoading(true);
 
         try {
-            const response = await changePassword({
-                password: formData.password,
-                newPassword: formData.newPassword,
-                // Backend ke liye
-                conformNewPassword: formData.confirmNewPassword,
-            });
-
+            const response = await changePassword(
+                adminId,
+                {
+                    password: formData.password,
+                    newPassword: formData.newPassword,
+                    conformNewPassword: formData.confirmNewPassword,
+                }
+            );
             toast.success(response.data.message);
 
             setFormData({
