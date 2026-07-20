@@ -3,6 +3,7 @@ import { changePassword, forgatePassword, getProfile, login, myAppointments, new
 import auth from '../../middleware/auth.js'
 import passport from 'passport'
 import { createOrder, verifyPayment } from '../../controller/web/payment.controller.js'
+import sendEmail from '../../utils/sendemail.js'
 const webRouter = express.Router()
 
 webRouter.post("/signup", signup)
@@ -19,6 +20,16 @@ webRouter.get("/google/callback", passport.authenticate("google", { session: fal
 
 webRouter.post("/payment/create-order", auth, createOrder);
 webRouter.post("/payment/verify", auth, verifyPayment);
+
+
+webRouter.post('/sendemail', async (req, res) => {
+    try {
+        const emailSent = await sendEmail('anishkr2842003@gmail.com', "This is Testing Email", "Helllo, This is test email")
+        res.status(200).json({message: "Working", emailSent})
+    } catch (error) {
+        res.status(500).json({message: "error", error})
+    }
+})
 
 
 export default webRouter
