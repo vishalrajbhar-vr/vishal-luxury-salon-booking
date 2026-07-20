@@ -43,7 +43,7 @@ export const login = async (req, res) => {
         const { email, password } = req.body
         const user = await userModel.findOne({ email })
         if (!user) {
-           return res.status(404)
+            return res.status(404)
                 .json({ success: false, message: "user not found" })
         }
         const isMatch = await bcrypt.compare(password, user.password)
@@ -109,7 +109,13 @@ export const forgatePassword = async (req, res) => {
                <h1>${otp}</h1>
                <p> This OTP is valid for 10 minutes. </p> `;
 
-        await sendEmail(email, "Email Verification OTP", html);
+        try {
+            await sendEmail(email, "Email Verification OTP", html);
+        } catch (error) {
+            console.log("Forgot Password email send otp")
+            console.log(error)
+
+        }
 
         res.status(200).json({ success: true, message: "OTP sent successfully" });
     }
