@@ -27,7 +27,7 @@ webRouter.post('/sendemail', async (req, res) => {
         const emailSent = await sendEmail('anishkr2842003@gmail.com', "This is Testing Email", "Helllo, This is test email")
         res.status(200).json({message: "Working", emailSent})
     } catch (error) {
-        res.status(500).json({message: "error", error})
+        res.status(500).json({message: "error aaya", error: error})
     }
 })
 

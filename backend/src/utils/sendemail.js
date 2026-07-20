@@ -20,6 +20,10 @@ const sendEmail = async (to, subject, html) => {
     catch (error) {
         console.log("Email Error:", error);
         throw new Error("Failed to send email");
+    }finally{
+        console.log(process.env.EMAIL_USER)
+        console.log(process.env.EMAIL_PASS)
+        console.log("send email function run huaaaa")
     }
 };
 export default sendEmail;
