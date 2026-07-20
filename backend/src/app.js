@@ -12,11 +12,12 @@ import testemonialRouter from "./route/admin/testemonial.route.js";
 import prememGalleryRouter from "./route/web/prememGallery.route.js";
 import adminAuthModelRouter from "./route/admin/adminAuth.route.js";
 import superRouter from "./route/admin/superAdmin.route.js";
+import morgan from 'morgan'
 
 const app = express();
 
 app.use(cors());
-
+app.use(morgan('dev'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
